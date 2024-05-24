@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width initial-scale=1.0"/>
+        <title>Technical Documentation</title>
+        <link rel="stylesheet" href="styles.css"/>
+    </head>
+    <body>
+        <nav id="navbar">
+            <header>Bash Script Documentation</header>
+            <ul>
+                <li>
+                    <a class="nav-link" href="#Introduction_to_the_Bash_Shell">Introduction to the Bash Shell</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="#What_is_a_Bash_Script?">What is a Bash Script?</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="#How_to_Create_Your_First_Bash_Script">How to Create Your First Bash Script</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="#How_to_define_variables">How to define variables</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="#Arithmetic_Expressions">Arithmetic Expressions</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="#How_to_read_user_input">How to read user input</a>
+                </li>
+            </ul>
+        </nav>
+        <main id="main-doc">
+            <section class="main-section" id="Introduction_to_the_Bash_Shell">
+                <header>Introduction to the Bash Shell</header>
+                <article>
+                    <p>The Linux command line is provided by a program called the shell. Over the years, the shell program has evolved to cater to various options. </p>
+                    <p>Different users can be configured to use different shells. But most users prefer to stick with the current default shell. The default shell for many Linux distros is the GNU Bourne-Again Shell (bash). Bash is succeeded by Bourne shell (<code>sh</code>).</p>
+                    <p>When you first launch the shell, it uses a startup script located in the <code>.bashrc</code> or <code>.bash_profile</code> file which allows you to customize the behavior of the shell.</p>
+                    <p>When a shell is used interactively, it displays a <code>$</code> when it is waiting for a command from the user. This is called the shell prompt.</p>
+                    <p><code>[username@host ~]$</code></p>
+                    <p>If shell is running as root, the prompt is changed to <code>#</code>. The superuser shell prompt looks like this:</p>
+                    <p><code>[root@host ~]#</code></p>
+                    <p>Bash is very powerful as it can simplify certain operations that are hard to accomplish efficiently with a GUI. Remember that most servers do not have a GUI, and it is best to learn to use the powers of a command line interface (CLI).</p>
+                </article>
+            </section>
+            <section class="main-section" id="What_is_a_Bash_Script?">
+                <header>What is a Bash Script?</header>
+                <article>
+                    <p>A bash script is a series of commands written in a file. These are read and executed by the bash program. The program executes line by line. </p>
+                    <p>For example, you can navigate to a certain path, create a folder and spawn a process inside it using the command line. </p>
+                    <p>You can do the same sequence of steps by saving the commands in a bash script and running it. You can run the script any number of times.</p>
+                </article>
+            </section>
+            <section class="main-section" id="How_to_Create_Your_First_Bash_Script">
+                <header>How to Create Your First Bash Script</header>
+                <article>
+                    <p>Let's create a simple script in bash that outputs <code>Hello World</code>.</p>
+                    <ul>
+                        <li>
+                            <h3>Create a file named hello_world.sh</h3> <br>
+                            <code class="show-code">touch hello_world.sh</code>
+                        </li>
+                        <li>
+                            <h3>Find the path to your bash shell.</h3><br>
+                            <code class="show-code">which bash</code><br>
+                            <figure>
+                                <img src="https://www.freecodecamp.org/news/content/images/2022/03/image-100.png" alt="image-100" width="300px" height="40px">
+                            </figure> <br>
+                            <p>In my case, the path is <code>/usr/bin/bash</code> and I will include this in the shebang.</p>
+                        </li>
+                        <li>
+                            <h3>Write the command.</h3><br>
+                            <p>We will <code>echo</code> "hello world" to the console.</p><br>
+                            <p>Our script will look something like this:</p><br>
+                            <code class="show-code">
+                                #! /usr/bin/bash<br>
+                                echo "Hello World"
+                            </code><br>
+                            <p>Edit the file <code>hello_world.sh</code> using a text editor of your choice and add the above lines in it.</p>
+                        </li>
+                        <li>
+                            <h3>Provide execution rights to your user.</h3><br>
+                            <p>Modify the file permissions and allow execution of the script by using the command below:</p><br>
+                            <code class="show-code">chmod  u+x hello_world.sh</code><br>
+                            <p><code>chmod</code> modifies the existing rights of a file for a particular user. We are adding <code>+x</code> to user <code>u</code>.</p>
+                        </li>
+                        <li>
+                            <h3>Run the script.</h3><br>
+                            <p>You can run the script in the following ways: </p><br>
+                            <code>./hello_world.sh</code><br>
+                            <code>bash hello_world.sh</code>.<br>
+                            <strong>Here's the output:</strong><br>
+                            <figure>
+                                <img src="https://www.freecodecamp.org/news/content/images/2022/03/image-160.png" class="kg-image" alt="Two ways to run scripts"width="370px" height="100px">
+                                <figcaption>Two ways to run scripts</figcaption>
+                            </figure>
+                        </li>
+                    </ul>
+                </article>
+            </section>
+            <section class="main-section" id="How_to_define_variables">
+                <header>How to define variables</header>
+                <article>
+                    <p>We can define a variable by using the syntax <code>variable_name=value</code>. To get the value of the variable, add <code>$</code> before the variable.</p>
+                    <code class="show-code">
+                        #!/bin/bash <br>
+                        <span class="comment-code"># A simple variable example</span> <br>
+                        greeting = Hello<br>
+                        name = Tux<br>
+                        echo $greeting $name<br>
+                        </code>
+                </article>
+            </section>
+            <section class="main-section" id="Arithmetic_Expressions">
+                <header>Arithmetic Expressions</header>
+                <article>
+                    <p>Below are the operators supported by bash for mathematical calculations:</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Operator</th>
+                                <th>Usage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>+</td>
+                                <td>addition</td>
+                            </tr>
+                            <tr>
+                                <td>-</td>
+                                <td>subtraction</td>
+                            </tr>
+                            <tr>
+                                <td>*</td>
+                                <td>multiplication</td>
+                            </tr>
+                            <tr>
+                                <td>/</td>
+                                <td>division</td>
+                            </tr>
+                            <tr>
+                                <td>**</td>
+                                <td>exponentiation</td>
+                            </tr>
+                            <tr>
+                                <td>%</td>
+                                <td>modulus</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>Numerical expressions can also be calculated and stored in a variable using the syntax below:</p>
+                    <code>var=$((expression))</code>
+                    <p>Let's try an example.</p>
+                    <code class="show-code">
+                        #!/bin/bash <br>
+                        var = $((3 + 9)) <br>
+                        echo $var <br>
+                    </code>
+                </article>
+            </section>
+            <section class="main-section" id="How_to_read_user_input"> 
+                <header>How to read user input</header>
+                <article>
+                    <p>Sometimes you'll need to gather user input and perform relevant operations. </p>
+                    <p>In bash, we can take user input using the <code>read</code> command.</p>
+                    <code class="show-code">read variable_name</code>
+                    <p>To prompt the user with a custom message, use the <code>-p</code> flag.</p>
+                    <code>read -p "Enter your age" variable_name</code>
+                    <p><strong>Example:</strong></p>
+                    <code class="show-code">
+                        #!/bin/bash<br>
+                        echo< "Enter a numner"<br>
+                        read  a<br>
+                        echo "Enter a numner"<br>
+                        read  b<br>      
+                        var = $((a + b))<br>
+                        echo $var
+                    </code>
+                </article>
+            </section>
+        </main>
+    </body>
+</html>
