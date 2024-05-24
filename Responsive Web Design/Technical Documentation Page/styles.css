@@ -71,19 +71,30 @@ section li {
     margin: 15px 0px 0px 20px;
 }
 
-/* code {
+code {
+    padding: 2px;
+    background-color: rgb(181, 177, 177);
+    color: black;
+}
+
+.show-code {
     display: block;
     text-align: left;
     white-space: pre-line;
     position: relative;
     word-break: normal;
     word-wrap: normal;
-    line-height: 2;
-    background-color: #f7f7f7;
+    line-height: 1;
+    background-color: #c4c5cd;
     padding: 15px;
     margin: 10px;
     border-radius: 5px;
-} */
+    
+}
+
+.comment-code {
+    color: green;
+}
 
 @media only screen and (max-width: 815px) {
     /* For mobile phones: */
@@ -125,26 +136,4 @@ section li {
     padding-right: 45px;
     min-width: 233px;
     }
-}
-
-
-code {
-    padding: 2px;
-    background-color: rgb(181, 177, 177);
-    color: black;
-}
-
-.show-code {
-    padding: 5px;
-    margin: 2px;
-    background-color: rgb(186, 197, 207);
-    color: rgb(73, 64, 64);
-    display: inline-grid;
-    
-}
-
-.comment-code {
-    color: green;
-    font-family:'consolas', sans-serif;
-    padding: 0;
 }

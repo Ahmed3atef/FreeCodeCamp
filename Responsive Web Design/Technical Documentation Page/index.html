@@ -28,6 +28,15 @@
                 <li>
                     <a class="nav-link" href="#How_to_read_user_input">How to read user input</a>
                 </li>
+                <li>
+                    <a class="nav-link" href="#Conditional_Statements_Decision_Making">Conditional Statements Decision Making</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="#Looping_and_skipping">Looping and skipping</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="#Reading_files">Reading files</a>
+                </li>
             </ul>
         </nav>
         <main id="main-doc">
@@ -178,6 +187,110 @@
                         var = $((a + b))<br>
                         echo $var
                     </code>
+                </article>
+            </section>
+            <section class="main-section" id="Conditional_Statements_Decision_Making">
+                <header>Conditional Statements Decision Making</header>
+                <article>
+                    <p>Conditions are expressions that evaluate to a boolean expression (<code>true</code> or <code>false</code>). To check conditions, we can use <code>if</code>, <code>if-else</code>, <code>if-elif-else</code> and nested conditionals.</p>
+                    <p>The structure of conditional statements is as follows:</p>
+                    <ul>
+                        <li>
+                            <code>if...then...fi</code> statements
+                        </li>
+                        <li>
+                            <code>if...then...else...fi</code> statements
+                        </li>
+                        <li>
+                            <code>if..elif..else..fi</code>
+                        </li>
+                        <li>
+                            <code>if..then..else..if..then..fi..fi..</code> (Nested Conditionals)
+                        </li>
+                    </ul>
+                    <p><strong>Syntax</strong>:</p>
+                    <code class="show-code">
+                        if [[ condition ]]<br>
+                        then<br>
+                        &nbsp;  &nbsp; statement<br>
+                        elif [[ condition ]]; then<br>
+                        &nbsp;  &nbsp; statement <br>
+                        else<br>
+                        &nbsp;  &nbsp; do this by default<br>
+                        fi
+                    </code>
+                    <p>To create meaningful comparisons, we can use AND <code>-a</code> and OR <code>-o</code> as well.</p>
+                    <p>The below statement translates to: If <code>a</code> is greater than 40 and <code>b</code> is less than 6.</p>
+                    <p><code>if [ $a -gt 40 -a $b -lt 6 ]</code></p>
+                </article>
+            </section>
+            <section class="main-section" id="Looping_and_skipping">
+                <header>Looping and skipping</header>
+                <article>
+                    <p>For loops allow you to execute statements a specific number of times.</p>
+                    <h4>Looping with numbers:</h4>
+                    <p>In the example below, the loop will iterate 5 times.</p>
+                    <code class="show-code">
+                        #!/bin/bash<br>
+                        for i in {1..5}<br>
+                        do<br>
+                        &nbsp;  &nbsp; echo $i<br>
+                        done
+                    </code>
+                    <figure>
+                        <img src="https://www.freecodecamp.org/news/content/images/2022/06/Looping-with-numbers.png" alt="Looping-with-numbers" width="300px" height="150px">
+                    </figure>
+                    <h4>Looping with strings:</h4>
+                    <p>We can loop through strings as well.</p>
+                    <code class="show-code">
+                        #!/bin/bash<br>
+                        for X in cyan magenta yellow  <br>
+                        do<br>
+                        &nbsp;  &nbsp; echo $X<br>
+                        done
+                    </code>
+                    <figure>
+                        <img src="https://www.freecodecamp.org/news/content/images/2022/06/Looping-with-strings.PNG" alt="Looping-with-strings" width="300px" height="150px">
+                    </figure>
+                    <h4>While loop</h4>
+                    <p>While loops check for a condition and loop until the condition remains <code>true</code>. We need to provide a counter statement that increments the counter to control loop execution. </p>
+                    <p>In the example below, <code>(( i += 1 ))</code> is the counter statement that increments the value of <code>i</code>.</p>
+                    <p><strong>Example:</strong></p>
+                    <code class="show-code">
+                    #!/bin/bash <br>
+                    i=1 <br>
+                    while [[ $i -le 10 ]] ; do <br>
+                    &nbsp;  &nbsp; echo "$i" <br>
+                    &nbsp;  &nbsp; (( i += 1 )) <br>
+                    done <br>
+                    </code>
+                    <figure>
+                        <img src="https://www.freecodecamp.org/news/content/images/2022/03/image-153.png" alt="image-153" width="300" height="200px">
+                    </figure>
+                </article>
+            </section>
+            <section class="main-section" id="Reading_files">
+                <header>Reading files</header>
+                <article>
+                    <p>Suppose we have a file <code>sample_file.txt</code> as shown below:</p>
+                    <figure>
+                        <img src="https://www.freecodecamp.org/news/content/images/2022/03/image-151.png" alt="image-151" width="500px" height="150px">
+                    </figure>
+                    <p>We can read the file line by line and print the output on the screen.</p>
+                    <code class="show-code">
+                        #!/bin/bash<br>
+                        LINE=1<br>
+                        while read -r CURRENT_LINE<br>
+                        &nbsp;  &nbsp;do<br>
+                        &nbsp;  &nbsp; &nbsp;  &nbsp;echo "$LINE: $CURRENT_LINE"<br>
+                        &nbsp;  &nbsp;((LINE++))<br>
+                        done &lt; "sample_file.txt"<br>
+                    </code>
+                    <p><strong>Output:</strong></p>
+                    <figure>
+                        <img src="https://www.freecodecamp.org/news/content/images/2022/03/image-152.png" alt="Lines with line number printed" width="500px" height="150px">
+                        <figcaption>Lines with line number printed</figcaption>
+                    </figure>
                 </article>
             </section>
         </main>
