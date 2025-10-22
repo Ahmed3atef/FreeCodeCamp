@@ -8,42 +8,53 @@ else
 fi
 
 # Do not change code above this line. Use the PSQL variable above to query your database.
+echo "$($PSQL "TRUNCATE TABLE teams, games")"
 
-echo "$($PSQL "TRUNCATE TABLE games, teams")"
-
-cat games.csv | while IFS="," read YEAR ROUND WINNER OPPONENT WINNER_GOALS OPPONENT_GOALS
+cat games.csv | while IFS="," read YEAR ROUND WINNER OPPONENT WINNER_GOALS OPPONENT_GOALS 
 do
   if [[ $YEAR != "year" ]]
   then
-
     # get winner_id
     WINNER_ID=$($PSQL "SELECT team_id FROM teams WHERE name='$WINNER'")
 
-    # if not found
+    # search if it exists
     if [[ -z $WINNER_ID ]]
-    then
-      # insert winner
-      INSERT_WINNER_TEAM=$($PSQL "INSERT INTO teams(name) VALUES('$WINNER')")
-
-      # get new winner_id
+    then 
+      # insert into teams table
+      INSERT_WINNER_TEAM=$($PSQL "INSERT INTO teams(name) VALUES ('$WINNER')")
+      # if it inserted correctly 
+      if [[ $INSERT_WINNER_TEAM == "INSERT 0 1" ]]
+      then
+        # indecate it that inserted
+        echo "One new Team inserted, $WINNER"
+      fi
+      # get the id of team from the table
       WINNER_ID=$($PSQL "SELECT team_id FROM teams WHERE name='$WINNER'")
     fi
 
-    # get opponent_id
+    # check if opponent arredy in my table
     OPPONENT_ID=$($PSQL "SELECT team_id FROM teams WHERE name='$OPPONENT'")
 
-    # if not found
+    # if is not there
     if [[ -z $OPPONENT_ID ]]
     then
-      # insert opponent
-      INSERT_OPPONENT_TEAM=$($PSQL "INSERT INTO teams(name) VALUES('$OPPONENT')")
+      # add opponent to teams table
+      INSERT_OPPONENT_TEAM=$($PSQL "INSERT INTO teams(name) VALUES ('$OPPONENT') ")
+      # if it inserted correctly 
+      if [[ $INSERT_OPPONENT_TEAM == "INSERT 0 1" ]]
+      then
+        # indecate it that inserted
+        echo "One new Team inserted, $OPPONENT"
+      fi
 
-      # get new opponent_id
+      # get the id of team from the table
       OPPONENT_ID=$($PSQL "SELECT team_id FROM teams WHERE name='$OPPONENT'")
     fi
 
-    INSERT_MAJORS_COURSES_RESULT=$($PSQL "INSERT INTO games(year, round, winner_id, opponent_id, winner_goals, opponent_goals) VALUES($YEAR, '$ROUND', $WINNER_ID, $OPPONENT_ID, $WINNER_GOALS, $OPPONENT_GOALS)")
-
+    INSERT_GAMES_RECORD=$($PSQL "INSERT INTO games (year, round, winner_id, opponent_id, winner_goals, opponent_goals) VALUES ('$YEAR', '$ROUND', '$WINNER_ID', '$OPPONENT_ID', $WINNER_GOALS, $OPPONENT_GOALS) ")
+    if [[ $INSERT_GAMES_RECORD == "INSERT 0 1" ]]
+    then
+      echo "New Row added ( $YEAR, $ROUND, $WINNER_ID, $OPPONENT_ID, $WINNER_GOALS, $OPPONENT_GOALS)"
+    fi
   fi
-
 done
