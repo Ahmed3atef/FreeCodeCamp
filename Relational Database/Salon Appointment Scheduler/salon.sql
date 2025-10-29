@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.9 (Ubuntu 12.9-2.pgdg20.04+1)
--- Dumped by pg_dump version 12.9 (Ubuntu 12.9-2.pgdg20.04+1)
+-- Dumped from database version 12.22 (Ubuntu 12.22-0ubuntu0.20.04.4)
+-- Dumped by pg_dump version 12.22 (Ubuntu 12.22-0ubuntu0.20.04.4)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -49,9 +49,9 @@ SET default_table_access_method = heap;
 
 CREATE TABLE public.appointments (
     appointment_id integer NOT NULL,
-    customer_id integer NOT NULL,
+    customer_id integer,
     service_id integer,
-    "time" character varying(10)
+    "time" character varying(50)
 );
 
 
@@ -85,8 +85,8 @@ ALTER SEQUENCE public.appointments_appointment_id_seq OWNED BY public.appointmen
 
 CREATE TABLE public.customers (
     customer_id integer NOT NULL,
-    phone character varying(12),
-    name character varying(40) NOT NULL
+    name character varying(50),
+    phone character varying(15)
 );
 
 
@@ -120,7 +120,7 @@ ALTER SEQUENCE public.customers_customer_id_seq OWNED BY public.customers.custom
 
 CREATE TABLE public.services (
     service_id integer NOT NULL,
-    name character varying(40) NOT NULL
+    name character varying(50)
 );
 
 
@@ -185,6 +185,11 @@ ALTER TABLE ONLY public.services ALTER COLUMN service_id SET DEFAULT nextval('pu
 -- Data for Name: services; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
+INSERT INTO public.services VALUES (1, 'cut');
+INSERT INTO public.services VALUES (2, 'color');
+INSERT INTO public.services VALUES (3, 'perm');
+INSERT INTO public.services VALUES (4, 'style');
+INSERT INTO public.services VALUES (5, 'trim');
 
 
 --
@@ -205,7 +210,7 @@ SELECT pg_catalog.setval('public.customers_customer_id_seq', 1, false);
 -- Name: services_service_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.services_service_id_seq', 1, false);
+SELECT pg_catalog.setval('public.services_service_id_seq', 5, true);
 
 
 --
@@ -217,19 +222,19 @@ ALTER TABLE ONLY public.appointments
 
 
 --
--- Name: customers customers_phone_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
---
-
-ALTER TABLE ONLY public.customers
-    ADD CONSTRAINT customers_phone_key UNIQUE (phone);
-
-
---
 -- Name: customers customers_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
 --
 
 ALTER TABLE ONLY public.customers
     ADD CONSTRAINT customers_pkey PRIMARY KEY (customer_id);
+
+
+--
+-- Name: customers phone_unique; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.customers
+    ADD CONSTRAINT phone_unique UNIQUE (phone);
 
 
 --
@@ -254,6 +259,14 @@ ALTER TABLE ONLY public.appointments
 
 ALTER TABLE ONLY public.appointments
     ADD CONSTRAINT appointments_service_id_fkey FOREIGN KEY (service_id) REFERENCES public.services(service_id);
+
+
+--
+-- Name: appointments appointments_service_id_fkey1; Type: FK CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.appointments
+    ADD CONSTRAINT appointments_service_id_fkey1 FOREIGN KEY (service_id) REFERENCES public.services(service_id);
 
 
 --
