@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.9 (Ubuntu 12.9-2.pgdg20.04+1)
--- Dumped by pg_dump version 12.9 (Ubuntu 12.9-2.pgdg20.04+1)
+-- Dumped from database version 12.22 (Ubuntu 12.22-0ubuntu0.20.04.4)
+-- Dumped by pg_dump version 12.22 (Ubuntu 12.22-0ubuntu0.20.04.4)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -49,8 +49,9 @@ SET default_table_access_method = heap;
 
 CREATE TABLE public.games (
     game_id integer NOT NULL,
-    guesses integer NOT NULL,
-    u_id integer
+    "timestamp" timestamp without time zone DEFAULT now() NOT NULL,
+    user_id integer NOT NULL,
+    number_of_gusses integer NOT NULL
 );
 
 
@@ -83,18 +84,18 @@ ALTER SEQUENCE public.games_game_id_seq OWNED BY public.games.game_id;
 --
 
 CREATE TABLE public.users (
-    u_id integer NOT NULL,
-    name character varying(30) NOT NULL
+    user_id integer NOT NULL,
+    username character varying(22) NOT NULL
 );
 
 
 ALTER TABLE public.users OWNER TO freecodecamp;
 
 --
--- Name: users_u_id_seq; Type: SEQUENCE; Schema: public; Owner: freecodecamp
+-- Name: users_user_id_seq; Type: SEQUENCE; Schema: public; Owner: freecodecamp
 --
 
-CREATE SEQUENCE public.users_u_id_seq
+CREATE SEQUENCE public.users_user_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -103,13 +104,13 @@ CREATE SEQUENCE public.users_u_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.users_u_id_seq OWNER TO freecodecamp;
+ALTER TABLE public.users_user_id_seq OWNER TO freecodecamp;
 
 --
--- Name: users_u_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
+-- Name: users_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
 --
 
-ALTER SEQUENCE public.users_u_id_seq OWNED BY public.users.u_id;
+ALTER SEQUENCE public.users_user_id_seq OWNED BY public.users.user_id;
 
 
 --
@@ -120,10 +121,10 @@ ALTER TABLE ONLY public.games ALTER COLUMN game_id SET DEFAULT nextval('public.g
 
 
 --
--- Name: users u_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
+-- Name: users user_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
 --
 
-ALTER TABLE ONLY public.users ALTER COLUMN u_id SET DEFAULT nextval('public.users_u_id_seq'::regclass);
+ALTER TABLE ONLY public.users ALTER COLUMN user_id SET DEFAULT nextval('public.users_user_id_seq'::regclass);
 
 
 --
@@ -136,6 +137,31 @@ ALTER TABLE ONLY public.users ALTER COLUMN u_id SET DEFAULT nextval('public.user
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
+INSERT INTO public.users VALUES (38, 'ahmed');
+INSERT INTO public.users VALUES (39, 'user_1762033508136');
+INSERT INTO public.users VALUES (40, 'user_1762033508135');
+INSERT INTO public.users VALUES (41, 'user_1762033732062');
+INSERT INTO public.users VALUES (42, 'user_1762033732061');
+INSERT INTO public.users VALUES (43, 'user_1762033869770');
+INSERT INTO public.users VALUES (44, 'user_1762033869769');
+INSERT INTO public.users VALUES (45, 'user_1762034090794');
+INSERT INTO public.users VALUES (46, 'user_1762034090793');
+INSERT INTO public.users VALUES (47, 'user_1762034110769');
+INSERT INTO public.users VALUES (48, 'user_1762034110768');
+INSERT INTO public.users VALUES (49, 'user_1762034122372');
+INSERT INTO public.users VALUES (50, 'user_1762034122371');
+INSERT INTO public.users VALUES (51, 'user_1762034131027');
+INSERT INTO public.users VALUES (52, 'user_1762034131026');
+INSERT INTO public.users VALUES (53, 'user_1762034704267');
+INSERT INTO public.users VALUES (54, 'user_1762034704266');
+INSERT INTO public.users VALUES (55, 'user_1762034957851');
+INSERT INTO public.users VALUES (56, 'user_1762034957850');
+INSERT INTO public.users VALUES (57, 'user_1762035152291');
+INSERT INTO public.users VALUES (58, 'user_1762035152290');
+INSERT INTO public.users VALUES (59, 'user_1762035239123');
+INSERT INTO public.users VALUES (60, 'user_1762035239122');
+INSERT INTO public.users VALUES (61, 'user_1762035279347');
+INSERT INTO public.users VALUES (62, 'user_1762035279346');
 
 
 --
@@ -146,10 +172,10 @@ SELECT pg_catalog.setval('public.games_game_id_seq', 1, false);
 
 
 --
--- Name: users_u_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
+-- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.users_u_id_seq', 1, false);
+SELECT pg_catalog.setval('public.users_user_id_seq', 62, true);
 
 
 --
@@ -165,17 +191,26 @@ ALTER TABLE ONLY public.games
 --
 
 ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (u_id);
+    ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
 
 
 --
--- Name: games games_u_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: freecodecamp
+-- Name: users users_username_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_username_key UNIQUE (username);
+
+
+--
+-- Name: games games_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: freecodecamp
 --
 
 ALTER TABLE ONLY public.games
-    ADD CONSTRAINT games_u_id_fkey FOREIGN KEY (u_id) REFERENCES public.users(u_id);
+    ADD CONSTRAINT games_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(user_id);
 
 
 --
 -- PostgreSQL database dump complete
 --
+
